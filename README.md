@@ -8,16 +8,16 @@
 
 ## 📋 What is this app?
 
-[cite_start]**Lazy Controller** is a remote control application that transforms your Android smartphone into a wireless mouse, keyboard, and media controller for your Windows PC[cite: 2].
+**Lazy Controller** is a remote control application that transforms your Android smartphone into a wireless mouse, keyboard, and media controller for your Windows PC.
 
-[cite_start]Whether you are watching a movie from bed, giving a presentation, or just want to navigate your computer without sitting at the desk, you can easily control your PC over your local Wi-Fi network[cite: 4].
+Whether you are watching a movie from bed, giving a presentation, or just want to navigate your computer without sitting at the desk, you can easily control your PC over your local Wi-Fi network.
 
 ### ✨ Features
 
-- [cite_start]**Mouse Control:** Move the cursor, scroll, and click with a highly responsive trackpad[cite: 5, 20].
+- **Mouse Control:** Move the cursor, scroll, and click with a highly responsive trackpad.
 - **Keyboard Navigation:** Arrow keys for quick media or presentation control.
-- [cite_start]**Media & System:** Adjust your PC's volume or even shut down your computer remotely[cite: 12].
-- [cite_start]**Modern UI:** A clean, futuristic dark/neon cyber-design for both mobile and desktop[cite: 7].
+- **Media & System:** Adjust your PC's volume or even shut down your computer remotely.
+- **Modern UI:** A clean, futuristic dark/neon cyber-design for both mobile and desktop.
 
 ---
 
@@ -42,9 +42,9 @@ We have created a simple, dedicated webpage where you can download the latest ve
 1. **Download the Windows Server (`.exe`)** from the website and run it on your PC.
 2. Click **"Start Server"** on the PC app. It will display your local IP address.
 3. **Download and install the Android App (`.apk`)** on your phone.
-4. [cite_start]Open the mobile app, enter the IP address shown on your PC, and tap Connect[cite: 4]!
+4. Open the mobile app, enter the IP address shown on your PC, and tap Connect!
 
-[cite_start]_(Note: Both your phone and PC must be connected to the same Wi-Fi network. Ensure your Windows Firewall allows the application to communicate over the network on port 9999 [cite: 19])._
+_(Note: Both your phone and PC must be connected to the same Wi-Fi network. Ensure your Windows Firewall allows the application to communicate over the network on port 9999 ._
 
 ---
 
