@@ -9,7 +9,9 @@ import android.util.TypedValue
 import android.view.MotionEvent
 import android.view.View
 import android.widget.Button // Kept for buttonConnect if it's a standard Button
-import com.google.android.material.textfield.TextInputEditText // For IP and Port
+import android.widget.ArrayAdapter
+import com.google.android.material.textfield.MaterialAutoCompleteTextView
+import com.google.android.material.textfield.TextInputEditText // For Port
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import kotlinx.coroutines.*
@@ -17,20 +19,51 @@ import java.io.IOException
 import java.io.OutputStream
 import java.net.Socket
 import kotlin.math.abs
+import android.content.Context
+import android.content.Intent
+import android.content.ServiceConnection
+import android.content.SharedPreferences
+import android.os.IBinder
 
 class MainActivity : AppCompatActivity() {
 
     // UI
-    private lateinit var editTextServerIp: TextInputEditText // Changed to TextInputEditText
-    private lateinit var editTextServerPort: TextInputEditText // Changed to TextInputEditText
-    private lateinit var buttonConnect: Button // Or MaterialButton if that's what you used
+    private lateinit var editTextServerIp: MaterialAutoCompleteTextView
+    private lateinit var editTextServerPort: TextInputEditText
+    private lateinit var buttonConnect: Button
     private lateinit var textViewStatus: TextView
     private lateinit var touchpadView: View
 
+    private lateinit var sharedPreferences: SharedPreferences
+    private val savedIps = mutableListOf<String>()
+    private lateinit var ipAdapter: ArrayAdapter<String>
+
+    // Networking Service
+    private var connectionService: ConnectionService? = null
+    private var isBound = false
+
+    private val serviceConnection = object : ServiceConnection {
+        override fun onServiceConnected(name: android.content.ComponentName?, service: IBinder?) {
+            val binder = service as ConnectionService.LocalBinder
+            connectionService = binder.getService()
+            isBound = true
+            
+            // Check if already connected (from previous session)
+            if (connectionService?.isConnected == true) {
+                updateUIForConnected()
+            } else {
+                // Auto-connect on open if we have a saved IP
+                attemptAutoConnect()
+            }
+        }
+
+        override fun onServiceDisconnected(name: android.content.ComponentName?) {
+            connectionService = null
+            isBound = false
+        }
+    }
+
     // Networking
-    private var clientSocket: Socket? = null
-    private var outputStream: OutputStream? = null
-    private var isConnected = false
     private val scope = CoroutineScope(Dispatchers.IO)
 
     // Touchpad state
@@ -56,6 +89,11 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
+        // Request notification permission for Android 13+
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.TIRAMISU) {
+            requestPermissions(arrayOf(android.Manifest.permission.POST_NOTIFICATIONS), 101)
+        }
+
         // Initialize clickMoveThresholdPx from DP
         clickMoveThresholdPx = TypedValue.applyDimension(
             TypedValue.COMPLEX_UNIT_DIP,
@@ -66,13 +104,22 @@ class MainActivity : AppCompatActivity() {
         // Find views
         editTextServerIp = findViewById(R.id.editTextServerIp)
         editTextServerPort = findViewById(R.id.editTextServerPort)
-        buttonConnect = findViewById(R.id.buttonConnect) // Ensure this ID and type matches your XML
+        buttonConnect = findViewById(R.id.buttonConnect)
         textViewStatus = findViewById(R.id.textViewStatus)
         touchpadView = findViewById(R.id.touchpadView)
 
+        // Setup IP dropdown
+        sharedPreferences = getSharedPreferences("LazyControllerPrefs", MODE_PRIVATE)
+        loadSavedIps()
+        ipAdapter = ArrayAdapter(this, android.R.layout.simple_dropdown_item_1line, savedIps)
+        editTextServerIp.setAdapter(ipAdapter)
+        if (savedIps.isNotEmpty()) {
+            editTextServerIp.setText(savedIps[0], false)
+        }
+
         // Connection button logic
         buttonConnect.setOnClickListener {
-            if (isConnected) {
+            if (connectionService?.isConnected == true) {
                 disconnectFromServer()
             } else {
                 val ip = editTextServerIp.text.toString()
@@ -111,6 +158,47 @@ class MainActivity : AppCompatActivity() {
 
         // Setup Touchpad
         setupTouchpad()
+
+        // Bind to ConnectionService
+        val intent = Intent(this, ConnectionService::class.java)
+        startService(intent) // Start it so it persists
+        bindService(intent, serviceConnection, BIND_AUTO_CREATE)
+    }
+
+    private fun attemptAutoConnect() {
+        val lastIp = savedIps.firstOrNull()
+        val portStr = editTextServerPort.text.toString()
+        val port = portStr.toIntOrNull() ?: 9999
+        
+        if (lastIp != null && lastIp.isNotBlank()) {
+            updateStatus("Auto-connecting to $lastIp...")
+            connectionService?.connect(lastIp, port) { success, message ->
+                if (success) {
+                    updateUIForConnected()
+                    updateStatus("Auto-connected")
+                } else {
+                    updateStatus("Auto-connect failed: $message", isError = true)
+                }
+            }
+        }
+    }
+
+    private fun updateUIForConnected() {
+        runOnUiThread {
+            buttonConnect.text = getString(R.string.disconnect_button_text)
+            // If we have current IP from service, set it
+            connectionService?.currentIp?.let {
+                if (editTextServerIp.text.toString() != it) {
+                    editTextServerIp.setText(it, false)
+                }
+            }
+        }
+    }
+
+    private fun updateUIForDisconnected() {
+        runOnUiThread {
+            buttonConnect.text = getString(R.string.connect_button_text)
+        }
     }
 
     @SuppressLint("ClickableViewAccessibility")
@@ -172,58 +260,31 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun connectToServer(ip: String, port: Int) {
-        scope.launch {
-            try {
-                updateStatus("Connecting...")
-                clientSocket = Socket(ip, port)
-                outputStream = clientSocket!!.getOutputStream()
-                isConnected = true
-                runOnUiThread { buttonConnect.text = getString(R.string.disconnect_button_text) } // Use string resource
+        updateStatus("Connecting...")
+        connectionService?.connect(ip, port) { success, message ->
+            if (success) {
+                updateUIForConnected()
                 updateStatus("Connected to $ip:$port")
-            } catch (e: IOException) {
-                Log.e(TAG, "Connection error", e)
-                isConnected = false
-                updateStatus("Connection failed: ${e.message}", true)
-                runOnUiThread { buttonConnect.text = getString(R.string.connect_button_text) } // Use string resource
+                saveIp(ip)
+            } else {
+                updateStatus("Connection failed: $message", isError = true)
+                updateUIForDisconnected()
             }
         }
     }
 
     private fun disconnectFromServer() {
-        scope.launch {
-            try {
-                outputStream?.close()
-                clientSocket?.close()
-            } catch (e: IOException) {
-                Log.e(TAG, "Error closing socket", e)
-            } finally {
-                outputStream = null
-                clientSocket = null
-                isConnected = false
-                updateStatus("Disconnected")
-                runOnUiThread { buttonConnect.text = getString(R.string.connect_button_text) } // Use string resource
-            }
-        }
+        connectionService?.disconnect()
+        updateUIForDisconnected()
+        updateStatus("Disconnected")
     }
 
     private fun sendCommand(command: String) {
-        if (!isConnected) {
+        if (connectionService?.isConnected != true) {
             Log.w(TAG, "Not connected; dropping command: $command")
-            // Consider showing a Toast here for user feedback
-            // runOnUiThread { Toast.makeText(this, "Not connected to server", Toast.LENGTH_SHORT).show() }
             return
         }
-        scope.launch {
-            try {
-                outputStream?.write((command + "\n").toByteArray(Charsets.UTF_8))
-                outputStream?.flush()
-                Log.d(TAG, "Sent: $command")
-            } catch (e: IOException) {
-                Log.e(TAG, "Error sending command", e)
-                updateStatus("Error sending data. Disconnecting.", true)
-                disconnectFromServer() // Attempt to disconnect cleanly
-            }
-        }
+        connectionService?.sendCommand(command)
     }
 
     private fun updateStatus(status: String, isError: Boolean = false) {
@@ -239,9 +300,38 @@ class MainActivity : AppCompatActivity() {
         Log.d(TAG, if (isError) "Error Status: $status" else "Status: $status")
     }
 
+    private fun loadSavedIps() {
+        val ipsString = sharedPreferences.getString("saved_ips", "")
+        if (!ipsString.isNullOrBlank()) {
+            savedIps.clear()
+            savedIps.addAll(ipsString.split(",").filter { it.isNotBlank() })
+        }
+        if (savedIps.isEmpty()) {
+            // Default IP if none saved
+            savedIps.add("192.168.2.123")
+        }
+    }
+
+    private fun saveIp(ip: String) {
+        if (!savedIps.contains(ip)) {
+            savedIps.add(0, ip)
+            // Limit to 10 saved IPs
+            if (savedIps.size > 10) savedIps.removeAt(savedIps.size - 1)
+            
+            sharedPreferences.edit().putString("saved_ips", savedIps.joinToString(",")).apply()
+            
+            runOnUiThread {
+                ipAdapter.notifyDataSetChanged()
+            }
+        }
+    }
+
     override fun onDestroy() {
         super.onDestroy()
-        disconnectFromServer()
+        if (isBound) {
+            unbindService(serviceConnection)
+            isBound = false
+        }
         scope.cancel() // Cancel all coroutines started by this scope
     }
 }
