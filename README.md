@@ -1,153 +1,50 @@
-# mouseApp - Lazy Controller
+<div align="center">
+  <h1>Lazy Controller 🎮</h1>
+  <p>A futuristic, seamless way to control your PC directly from your Android phone.</p>
+</div>
 
-Control your PC mouse, keyboard, and media using your Android device over a network connection.
+## 📋 What is this app?
 
-## 📋 Overview
+[cite_start]**Lazy Controller** is a remote control application that transforms your Android smartphone into a wireless mouse, keyboard, and media controller for your Windows PC[cite: 2].
 
-mouseApp is a remote control application that allows you to use your Android smartphone as a wireless mouse, keyboard, and media controller for your PC. It consists of two main components:
+[cite_start]Whether you are watching a movie from bed, giving a presentation, or just want to navigate your computer without sitting at the desk, you can easily control your PC over your local Wi-Fi network[cite: 4].
 
-- **Android App**: Client application for sending commands
-- **PC Server**: Server application that receives and executes commands on your PC
+### ✨ Features
 
-## 🎯 Features
-
-- **Mouse Control**: Move cursor and click
-- **Keyboard Navigation**: Arrow keys and other key presses
-- **Scroll Control**: Scroll up and down on web pages and applications
-- **Volume Control**: Adjust PC volume up and down
-- **System Control**: Remote PC shutdown capability
-- **Network Communication**: TCP socket-based communication between Android and PC
-- **GUI Server**: User-friendly GUI for starting/stopping the server and monitoring connections
-
-## 📁 Project Structure
-
-```
-mouseApp/
-├── AndriodApp/              # Android application (Kotlin)
-│   ├── app/
-│   │   ├── src/
-│   │   │   ├── main/       # Main Android app source
-│   │   │   ├── test/       # Unit tests
-│   │   │   └── androidTest/ # Android instrumentation tests
-│   │   └── build.gradle.kts # Android build configuration
-│   ├── gradle/             # Gradle wrapper and configuration
-│   └── settings.gradle.kts
-│
-└── PcServerApp/            # Python PC server application
-    ├── gui_mouse_server.py # GUI application for server control
-    ├── pc_mouse_server.py  # Core server logic
-    ├── LazyController.spec # PyInstaller specification
-    ├── build_app.py        # Build script
-    └── requirements.txt    # Python dependencies
-```
-
-## 🔧 Requirements
-
-### PC Server
-
-- Windows OS (with Python 3.7+)
-- Python dependencies:
-  - `pyautogui` - For mouse and keyboard automation
-  - `pycaw` - For volume control
-  - `pyinstaller` - For building standalone executable
-
-Install dependencies:
-
-```bash
-pip install -r requirements.txt
-```
-
-### Android App
-
-- Android 10 (API 29) or higher
-- Kotlin support
-- Network connectivity (same network as PC)
-
-## 🚀 Quick Start
-
-### PC Server Setup
-
-1. Navigate to the `PcServerApp` directory
-2. Install Python dependencies:
-   ```bash
-   pip install -r requirements.txt
-   ```
-3. Run the GUI server:
-   ```bash
-   python gui_mouse_server.py
-   ```
-4. Click "Start Server" to begin listening for Android connections on port 9999
-
-### Android App Setup
-
-1. Build and install the Android app on your device
-2. Configure the PC's IP address in the app settings
-3. Press connect to establish connection with the server
-4. Use the app interface to control your PC
-
-## 🎮 Supported Commands
-
-| Command          | Action                       |
-| ---------------- | ---------------------------- |
-| `MOUSE_MOVE x y` | Move cursor by (x, y) pixels |
-| `LEFT_CLICK`     | Perform left mouse click     |
-| `ARROW_LEFT`     | Press left arrow key         |
-| `ARROW_RIGHT`    | Press right arrow key        |
-| `SCROLL_UP`      | Scroll up                    |
-| `SCROLL_DOWN`    | Scroll down                  |
-| `VOLUME_UP`      | Increase system volume by 2% |
-| `VOLUME_DOWN`    | Decrease system volume by 2% |
-| `SHUTDOWN`       | Shutdown the PC              |
-
-## 🔌 Network Communication
-
-- **Protocol**: TCP Socket
-- **Port**: 9999
-- **Host**: 0.0.0.0 (listens on all available interfaces)
-- **Data Format**: UTF-8 encoded text commands
-
-## 📝 Configuration
-
-The PC server is configured with the following defaults:
-
-- Host: `0.0.0.0` (accepts connections from any IP)
-- Port: `9999`
-- Volume adjustment step: 2% per command
-- Mouse movement: Instant (no acceleration)
-
-## 🛠️ Building
-
-### PC Server Executable
-
-To build a standalone Windows executable:
-
-```bash
-python build_app.py
-```
-
-This will create a `.exe` file using PyInstaller for distribution without requiring Python installation.
-
-### Android App
-
-Build the APK using Android Studio or Gradle:
-
-```bash
-cd AndriodApp
-./gradlew assembleRelease
-```
-
-## 📄 License
-
-See [LICENSE](LICENSE) file for details.
-
-## 🤝 Contributing
-
-Contributions are welcome! Please feel free to submit issues or pull requests.
-
-## 📞 Support
-
-For issues or questions, please open an issue in the repository.
+- [cite_start]**Mouse Control:** Move the cursor, scroll, and click with a highly responsive trackpad[cite: 5, 20].
+- **Keyboard Navigation:** Arrow keys for quick media or presentation control.
+- [cite_start]**Media & System:** Adjust your PC's volume or even shut down your computer remotely[cite: 12].
+- [cite_start]**Modern UI:** A clean, futuristic dark/neon cyber-design for both mobile and desktop[cite: 7].
 
 ---
 
-**Note**: This application requires both devices to be on the same network. Ensure your firewall allows connections on port 9999.
+## 📸 Screenshots
+
+<p align="center">
+  <img src="androidApp.jpg" alt="Android App Preview" width="250"/>
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+  <img src="desktopApp.png" alt="Desktop Server Preview" width="450"/>
+</p>
+
+---
+
+## 🚀 Download & Install
+
+We have created a simple, dedicated webpage where you can download the latest versions of both the Android App and the Windows Server.
+
+**📥 [CLICK HERE TO VISIT THE DOWNLOAD PAGE](https://majdAlmotaem.github.io/mouseApp/)**
+
+### How to use:
+
+1. **Download the Windows Server (`.exe`)** from the website and run it on your PC.
+2. Click **"Start Server"** on the PC app. It will display your local IP address.
+3. **Download and install the Android App (`.apk`)** on your phone.
+4. [cite_start]Open the mobile app, enter the IP address shown on your PC, and tap Connect[cite: 4]!
+
+[cite_start]_(Note: Both your phone and PC must be connected to the same Wi-Fi network. Ensure your Windows Firewall allows the application to communicate over the network on port 9999 [cite: 19])._
+
+---
+
+## 📄 License
+
+This project is open-source and available under the **MIT License**. See the [LICENSE](LICENSE) file for more details.
