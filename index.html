@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lazy Controller App</title>
+    <style>
+        body {
+            background-color: #0A0D14;
+            color: #FFFFFF;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            text-align: center;
+            padding: 50px 20px;
+            margin: 0;
+        }
+        h1 {
+            font-size: 3rem;
+            letter-spacing: 2px;
+            margin-bottom: 10px;
+        }
+        .accent { color: #00F0FF; }
+        p {
+            color: #4A5A75;
+            font-size: 1.2rem;
+            max-width: 600px;
+            margin: 0 auto 40px auto;
+            line-height: 1.6;
+        }
+        .btn-container {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+        .btn {
+            background-color: #0A0D14;
+            color: #00F0FF;
+            text-decoration: none;
+            padding: 15px 30px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            border: 2px solid #00F0FF;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+        }
+        .btn:hover {
+            background-color: #00F0FF;
+            color: #0A0D14;
+        }
+        .btn-red {
+            color: #FF2A55;
+            border-color: #FF2A55;
+        }
+        .btn-red:hover {
+            background-color: #FF2A55;
+            color: #0A0D14;
+        }
+        .instructions {
+            margin-top: 60px;
+            text-align: left;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+            background-color: #111520;
+            padding: 30px;
+            border-left: 4px solid #00F0FF;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>LAZY <span class="accent">CONTROLLER</span></h1>
+    <p>A futuristic, seamless way to control your PC mouse and keyboard directly from your Android phone.</p>
+
+    <div class="btn-container">
+        <a href="sha256:0aa6fc1767c4422a88a62c6cc9cba761aebf4da9fef0d2c14ff6d4f5a3d66929" class="btn">⬇️ Download Android APK</a>
+        <a href="sha256:2c46d4b9700778a5b9324c8f05a255089de7558aee530ea583c9cd28195e1e4f" class="btn btn-red">⬇️ Download Windows Server</a>
+    </div>
+
+    <div class="instructions">
+        <h2 style="color: #00F0FF; margin-top: 0;">How to use:</h2>
+        <ol style="color: #4A5A75; font-size: 1.1rem; line-height: 1.8;">
+            <li>Download and run the Windows Server <b>.exe</b> on your PC.</li>
+            <li>Click "Start Server" to get your local IP address.</li>
+            <li>Install the Android <b>.apk</b> on your phone.</li>
+            <li>Enter the IP address into the app and connect!</li>
+        </ol>
+    </div>
+
+</body>
+</html>
