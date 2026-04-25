@@ -1,5 +1,8 @@
 <div align="center">
-  <h1>Lazy Controller 🎮</h1>
+  <h1>Lazy Controller</h1>
+  <p align="center">
+  <img src="PcServerApp\icon.ico" alt="icon" width="128"/>
+  </p>
   <p>A futuristic, seamless way to control your PC directly from your Android phone.</p>
 </div>
 
