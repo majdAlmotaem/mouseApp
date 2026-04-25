@@ -187,6 +187,7 @@ class MainActivity : AppCompatActivity() {
     private fun updateUIForConnected() {
         runOnUiThread {
             buttonConnect.text = getString(R.string.disconnect_button_text)
+            buttonConnect.setTextColor(getColor(R.color.power_button)) // Red for disconnect
             // If we have current IP from service, set it
             connectionService?.currentIp?.let {
                 if (editTextServerIp.text.toString() != it) {
@@ -198,7 +199,8 @@ class MainActivity : AppCompatActivity() {
 
     private fun updateUIForDisconnected() {
         runOnUiThread {
-            buttonConnect.text = getString(R.string.connect_button_text)
+            buttonConnect.text = getString(R.string.establish_connection)
+            buttonConnect.setTextColor(getColor(R.color.colorAccent))
         }
     }
 
@@ -301,11 +303,11 @@ class MainActivity : AppCompatActivity() {
 
     private fun updateStatus(status: String, isError: Boolean = false) {
         runOnUiThread {
-            textViewStatus.text = "Status: $status" // Consider using string resources for "Status: "
+            textViewStatus.text = status
             val color = if (isError) {
-                getColor(R.color.error_text_color) // Define this in your colors.xml
+                getColor(R.color.error_text_color)
             } else {
-                getColor(R.color.status_text_color) // Define this in your colors.xml
+                getColor(R.color.status_text_color)
             }
             textViewStatus.setTextColor(color)
         }

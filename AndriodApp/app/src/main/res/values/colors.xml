@@ -1,34 +1,40 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <!-- Primary Colors -->
-    <color name="colorPrimary">#1976D2</color>
-    <color name="colorAccent">#D32F2F</color>
-    <color name="status_bar_color">#0D47A1</color>
+    <!-- Futuristic Primary Colors -->
+    <color name="colorPrimary">#0D47A1</color>
+    <color name="colorAccent">#00E5FF</color> <!-- Cyber Cyan -->
+    <color name="colorSecondary">#BC00FF</color> <!-- Electric Purple -->
+    <color name="status_bar_color">#080A0F</color>
 
     <!-- Background Colors -->
-    <color name="background_dark">#121212</color>
-    <color name="card_background">#1E1E1E</color>
-    <color name="input_background">#2A2A2A</color>
+    <color name="background_dark">#080A0F</color>
+    <color name="card_background">#12161F</color>
+    <color name="input_background">#1A1F2B</color>
 
-    <!-- Button Colors -->
-    <color name="remote_button">#333333</color>
-    <color name="dark_button">#333333</color> <!-- Keep your original name too -->
-    <color name="volume_button">#424242</color>
-    <color name="power_button">#D32F2F</color>
-    <color name="button_stroke">#555555</color>
+    <!-- UI Component Colors -->
+    <color name="remote_button">#1A1F2B</color>
+    <color name="dark_button">#1A1F2B</color>
+    <color name="volume_button">#1A1F2B</color>
+    <color name="power_button">#FF1744</color>
+    <color name="button_stroke">#2C3445</color>
+    <color name="accent_stroke">#00E5FF</color>
 
     <!-- Text Colors -->
     <color name="text_primary">#FFFFFF</color>
-    <color name="text_secondary">#B3FFFFFF</color>
-    <color name="text_hint">#80FFFFFF</color>
+    <color name="text_secondary">#94A3B8</color>
+    <color name="text_hint">#64748B</color>
 
     <!-- Interactive Colors -->
-    <color name="button_ripple">#40FFFFFF</color>
-    <color name="power_button_ripple">#40FFFFFF</color>
-    <color name="dpad_ripple">#30FF4081</color>
-    <color name="dpad_stroke">#40FFFFFF</color>
-    <color name="dpad_background">#15FFFFFF</color>
+    <color name="button_ripple">#2000E5FF</color>
+    <color name="power_button_ripple">#20FF1744</color>
+    <color name="dpad_ripple">#2000E5FF</color>
+    <color name="dpad_stroke">#2C3445</color>
+    <color name="dpad_background">#0D1117</color>
 
-    <color name="error_text_color">#D32F2F</color> <!-- Example Red -->
-    <color name="status_text_color">#B3FFFFFF</color> <!-- Example: Same as text_secondary -->
+    <color name="error_text_color">#FF1744</color>
+    <color name="status_text_color">#00E5FF</color>
+
+    <!-- Gradient Colors -->
+    <color name="grad_start">#080A0F</color>
+    <color name="grad_end">#12161F</color>
 </resources>

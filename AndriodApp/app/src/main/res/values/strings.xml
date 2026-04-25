@@ -1,6 +1,18 @@
 <resources>
-    <string name="app_name">MouseApp</string>
+    <string name="app_name">Lazy Controller</string>
+    <string name="app_title">PC CONTROLLER</string>
     <string name="connect_button_text">Connect</string>
     <string name="disconnect_button_text">Disconnect</string>
-    <!-- ... other strings ... -->
+    <string name="establish_connection">Establish Connection</string>
+    <string name="status_disconnected">Status: Disconnected</string>
+    <string name="server_ip">Server IP</string>
+    <string name="port">Port</string>
+    <string name="pwr">PWR</string>
+    <string name="prev">PREV</string>
+    <string name="next">NEXT</string>
+    <string name="scroll_up">▲</string>
+    <string name="scroll_down">▼</string>
+    <string name="plus">+</string>
+    <string name="minus">-</string>
+    <string name="default_port">9999</string>
 </resources>
