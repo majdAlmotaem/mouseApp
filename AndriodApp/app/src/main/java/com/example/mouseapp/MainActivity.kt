@@ -13,6 +13,7 @@ import android.widget.ArrayAdapter
 import com.google.android.material.textfield.MaterialAutoCompleteTextView
 import com.google.android.material.textfield.TextInputEditText // For Port
 import android.widget.TextView
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import kotlinx.coroutines.*
 import java.io.IOException
@@ -134,7 +135,7 @@ class MainActivity : AppCompatActivity() {
 
         // Setup other command buttons
         findViewById<com.google.android.material.button.MaterialButton>(R.id.btnShutdown).setOnClickListener {
-            sendCommand("SHUTDOWN")
+            showShutdownConfirmationDialog()
         }
         findViewById<com.google.android.material.button.MaterialButton>(R.id.btnVolumeUp).setOnClickListener {
             sendCommand("VOLUME_UP")
@@ -285,6 +286,17 @@ class MainActivity : AppCompatActivity() {
             return
         }
         connectionService?.sendCommand(command)
+    }
+
+    private fun showShutdownConfirmationDialog() {
+        AlertDialog.Builder(this)
+            .setTitle("Shutdown PC")
+            .setMessage("Are you sure you want to shut down your PC?")
+            .setPositiveButton("Yes") { _, _ ->
+                sendCommand("SHUTDOWN")
+            }
+            .setNegativeButton("No", null)
+            .show()
     }
 
     private fun updateStatus(status: String, isError: Boolean = false) {
