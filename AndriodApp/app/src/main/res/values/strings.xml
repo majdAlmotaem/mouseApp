@@ -15,4 +15,12 @@
     <string name="plus">+</string>
     <string name="minus">-</string>
     <string name="default_port">9999</string>
+    <string name="help_title">Setup Instructions</string>
+    <string name="help_message">1. Ensure you have installed the Server App on your PC.\n2. Both devices must be on the same Wi-Fi network.\n3. The IP address to use is displayed on the PC Server App.</string>
+    <string name="shutdown_title">Shutdown PC</string>
+    <string name="shutdown_confirm">Are you sure you want to shut down your PC?</string>
+    <string name="yes">Yes</string>
+    <string name="no">No</string>
+    <string name="ok">OK</string>
+    <string name="help_sign">\?</string>
 </resources>

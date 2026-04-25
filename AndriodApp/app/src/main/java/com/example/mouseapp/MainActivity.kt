@@ -13,7 +13,7 @@ import android.widget.ArrayAdapter
 import com.google.android.material.textfield.MaterialAutoCompleteTextView
 import com.google.android.material.textfield.TextInputEditText // For Port
 import android.widget.TextView
-import androidx.appcompat.app.AlertDialog
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import androidx.appcompat.app.AppCompatActivity
 import kotlinx.coroutines.*
 import java.io.IOException
@@ -157,6 +157,10 @@ class MainActivity : AppCompatActivity() {
             sendCommand("SCROLL_DOWN")
         }
 
+        findViewById<com.google.android.material.button.MaterialButton>(R.id.btnHelp).setOnClickListener {
+            showHelpDialog()
+        }
+
         // Setup Touchpad
         setupTouchpad()
 
@@ -291,13 +295,21 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun showShutdownConfirmationDialog() {
-        AlertDialog.Builder(this)
-            .setTitle("Shutdown PC")
-            .setMessage("Are you sure you want to shut down your PC?")
-            .setPositiveButton("Yes") { _, _ ->
+        MaterialAlertDialogBuilder(this, R.style.FuturisticDialogStyle)
+            .setTitle(R.string.shutdown_title)
+            .setMessage(R.string.shutdown_confirm)
+            .setPositiveButton(R.string.yes) { _, _ ->
                 sendCommand("SHUTDOWN")
             }
-            .setNegativeButton("No", null)
+            .setNegativeButton(R.string.no, null)
+            .show()
+    }
+
+    private fun showHelpDialog() {
+        MaterialAlertDialogBuilder(this, R.style.FuturisticDialogStyle)
+            .setTitle(R.string.help_title)
+            .setMessage(R.string.help_message)
+            .setPositiveButton(R.string.ok, null)
             .show()
     }
 
