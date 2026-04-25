@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:tools="http://schemas.android.com/tools">
+
+    <!-- Main App Theme -->
+    <style name="AppTheme" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/status_bar_color</item>
+        <item name="colorAccent">@color/colorAccent</item>
+        <item name="android:colorBackground">@color/background_dark</item>
+        <item name="colorSurface">@color/card_background</item>
+        <item name="colorOnSurface">@color/text_primary</item>
+    </style>
+
+    <!-- Remote Control Button Style -->
+    <style name="RemoteButtonStyle" parent="Widget.MaterialComponents.Button">
+        <item name="backgroundTint">@color/remote_button</item>
+        <item name="android:textColor">@android:color/white</item>
+        <item name="cornerRadius">20dp</item>
+        <item name="elevation">6dp</item>
+        <item name="rippleColor">@color/button_ripple</item>
+        <item name="android:hapticFeedbackEnabled">true</item>
+    </style>
+
+    <!-- Modern D-Pad Button Style -->
+    <style name="DpadButtonStyle" parent="Widget.MaterialComponents.Button">
+        <item name="backgroundTint">@android:color/transparent</item>
+        <item name="android:textColor">@color/text_primary</item>
+        <item name="cornerRadius">30dp</item>
+        <item name="elevation">0dp</item>
+        <item name="rippleColor">@color/dpad_ripple</item>
+        <item name="android:hapticFeedbackEnabled">true</item>
+        <item name="strokeColor">@color/dpad_stroke</item>
+        <item name="strokeWidth">2dp</item>
+    </style>
+
+    <!-- D-Pad Center Button Style -->
+    <style name="DpadCenterButtonStyle" parent="Widget.MaterialComponents.Button">
+        <item name="backgroundTint">@color/colorAccent</item>
+        <item name="android:textColor">@android:color/white</item>
+        <item name="cornerRadius">40dp</item>
+        <item name="elevation">8dp</item>
+        <item name="rippleColor">@color/button_ripple</item>
+        <item name="android:hapticFeedbackEnabled">true</item>
+    </style>
+
+    <!-- Volume Control Button Style -->
+    <style name="VolumeButtonStyle" parent="Widget.MaterialComponents.Button">
+        <item name="backgroundTint">@color/volume_button</item>
+        <item name="android:textColor">@android:color/white</item>
+        <item name="cornerRadius">16dp</item>
+        <item name="elevation">4dp</item>
+        <item name="rippleColor">@color/button_ripple</item>
+    </style>
+
+    <!-- Power Button Style -->
+    <style name="PowerButtonStyle" parent="Widget.MaterialComponents.Button">
+        <item name="backgroundTint">@color/power_button</item>
+        <item name="android:textColor">@android:color/white</item>
+        <item name="cornerRadius">30dp</item>
+        <item name="elevation">4dp</item>
+        <item name="rippleColor">@color/power_button_ripple</item>
+    </style>
+
+    <!-- Navigation Button Style -->
+    <style name="NavigationButtonStyle" parent="Widget.MaterialComponents.Button.OutlinedButton">
+        <item name="android:textColor">@color/text_primary</item>
+        <item name="cornerRadius">12dp</item>
+        <item name="strokeColor">@color/button_stroke</item>
+        <item name="strokeWidth">1dp</item>
+        <item name="rippleColor">@color/button_ripple</item>
+    </style>
+
+
+
+</resources>

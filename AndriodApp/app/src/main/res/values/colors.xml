@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Primary Colors -->
+    <color name="colorPrimary">#1976D2</color>
+    <color name="colorAccent">#D32F2F</color>
+    <color name="status_bar_color">#0D47A1</color>
+
+    <!-- Background Colors -->
+    <color name="background_dark">#121212</color>
+    <color name="card_background">#1E1E1E</color>
+    <color name="input_background">#2A2A2A</color>
+
+    <!-- Button Colors -->
+    <color name="remote_button">#333333</color>
+    <color name="dark_button">#333333</color> <!-- Keep your original name too -->
+    <color name="volume_button">#424242</color>
+    <color name="power_button">#D32F2F</color>
+    <color name="button_stroke">#555555</color>
+
+    <!-- Text Colors -->
+    <color name="text_primary">#FFFFFF</color>
+    <color name="text_secondary">#B3FFFFFF</color>
+    <color name="text_hint">#80FFFFFF</color>
+
+    <!-- Interactive Colors -->
+    <color name="button_ripple">#40FFFFFF</color>
+    <color name="power_button_ripple">#40FFFFFF</color>
+    <color name="dpad_ripple">#30FF4081</color>
+    <color name="dpad_stroke">#40FFFFFF</color>
+    <color name="dpad_background">#15FFFFFF</color>
+
+    <color name="error_text_color">#D32F2F</color> <!-- Example Red -->
+    <color name="status_text_color">#B3FFFFFF</color> <!-- Example: Same as text_secondary -->
+</resources>
