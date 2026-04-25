@@ -7,7 +7,24 @@ from tkinter import messagebox
 import threading
 import os
 import sys
+import socket
 from pc_mouse_server import MouseServer
+
+def get_ip_address():
+    """Get the local IP address of the machine"""
+    try:
+        # Connect to an external server (Google DNS) to determine local IP
+        s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+        s.connect(("8.8.8.8", 80))
+        ip = s.getsockname()[0]
+        s.close()
+        return ip
+    except:
+        try:
+            # Fallback: use hostname
+            return socket.gethostbyname(socket.gethostname())
+        except:
+            return "localhost"
 
 class ServerController:
     def __init__(self):
@@ -121,6 +138,19 @@ def main():
     btn_frame = tk.Frame(main_frame, bg="#1e1e1e")
     btn_frame.pack(pady=20)
 
+    # Add server info label (IP address)
+    server_frame = tk.Frame(main_frame, bg="#1e1e1e")
+    server_frame.pack(pady=(0, 10))
+    
+    server_label = tk.Label(
+        server_frame,
+        text="Server IP: Not running",
+        font=status_font,
+        bg="#1e1e1e",
+        fg="#888888"
+    )
+    server_label.pack()
+
     # Add client info label
     client_frame = tk.Frame(main_frame, bg="#1e1e1e")
     client_frame.pack(pady=(0, 20))
@@ -136,12 +166,15 @@ def main():
 
     def on_start():
         if controller.start_server():
+            server_ip = get_ip_address()
             status_text.config(text="Running", fg="#44ff44")
+            server_label.config(text=f"Server IP: {server_ip}:9999", fg="#44ff44")
             client_label.config(text="Waiting for connection...", fg="#888888")
 
     def on_stop():
         controller.stop_server()
         status_text.config(text="Stopped", fg="#ff4444")
+        server_label.config(text="Server IP: Not running", fg="#888888")
         client_label.config(text="No device connected", fg="#888888")
 
     start_btn = tk.Button(
