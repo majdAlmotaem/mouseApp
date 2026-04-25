@@ -26,22 +26,70 @@
             margin: 0 auto 40px auto;
             line-height: 1.6;
         }
-        .btn-container {
+        
+        /* Layout for Cards */
+        .downloads-section {
             display: flex;
             justify-content: center;
-            gap: 20px;
+            gap: 40px;
             flex-wrap: wrap;
+            margin-bottom: 40px;
         }
+        .download-card {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            background-color: #111520;
+            padding: 30px;
+            border-radius: 15px;
+            width: 320px;
+            border: 1px solid #1e2536;
+        }
+
+        /* Images Styling */
+        .preview-img {
+            margin-top: 25px;
+            width: 100%;
+            height: 350px; 
+            object-fit: contain; 
+            background-color: #05070A; 
+            padding: 10px; 
+            box-sizing: border-box; 
+            border-radius: 8px;
+            border: 2px solid #00F0FF;
+            box-shadow: 0 0 15px rgba(0, 240, 255, 0.15);
+            cursor: pointer; /* Changes mouse to a pointer hand */
+            transition: transform 0.3s ease, box-shadow 0.3s ease; /* Smooth animation */
+        }
+        
+        /* Hover effect for clickable images */
+        .preview-img:hover {
+            transform: scale(1.03); /* Zooms in slightly */
+            box-shadow: 0 0 25px rgba(0, 240, 255, 0.4);
+        }
+
+        .img-red {
+            border-color: #FF2A55;
+            box-shadow: 0 0 15px rgba(255, 42, 85, 0.15);
+        }
+        .img-red:hover {
+            box-shadow: 0 0 25px rgba(255, 42, 85, 0.4);
+        }
+
+        /* Button Styling */
         .btn {
             background-color: #0A0D14;
             color: #00F0FF;
             text-decoration: none;
-            padding: 15px 30px;
+            padding: 15px 20px;
+            width: 90%;
             font-size: 1.1rem;
             font-weight: bold;
             border: 2px solid #00F0FF;
             transition: all 0.3s ease;
             text-transform: uppercase;
+            border-radius: 12px;
+            box-sizing: border-box;
         }
         .btn:hover {
             background-color: #00F0FF;
@@ -55,8 +103,9 @@
             background-color: #FF2A55;
             color: #0A0D14;
         }
+
         .instructions {
-            margin-top: 60px;
+            margin-top: 20px;
             text-align: left;
             max-width: 600px;
             margin-left: auto;
@@ -65,6 +114,40 @@
             padding: 30px;
             border-left: 4px solid #00F0FF;
         }
+
+        /* LIGHTBOX MODAL CSS */
+        .modal {
+            display: none; /* Hidden by default */
+            position: fixed; /* Stays in place */
+            z-index: 1000; /* Sits on top of everything */
+            left: 0;
+            top: 0;
+            width: 100%; 
+            height: 100%; 
+            background-color: rgba(10, 13, 20, 0.9); /* Dark semi-transparent background */
+            backdrop-filter: blur(5px); /* Blurs the website behind it */
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            cursor: pointer; /* Clicking anywhere closes it */
+        }
+
+        .modal-content {
+            max-width: 90%;
+            max-height: 85%;
+            border-radius: 10px;
+            border: 2px solid; /* Color applied by JS */
+            box-shadow: 0 0 30px rgba(0,0,0,0.5);
+            object-fit: contain;
+        }
+
+        .close-text {
+            color: #4A5A75;
+            margin-top: 15px;
+            font-size: 1.2rem;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
     </style>
 </head>
 <body>
@@ -72,9 +155,16 @@
     <h1>LAZY <span class="accent">CONTROLLER</span></h1>
     <p>A futuristic, seamless way to control your PC mouse and keyboard directly from your Android phone.</p>
 
-    <div class="btn-container">
-        <a href="https://github.com/majdAlmotaem/mouseApp/releases/download/v1.0.0/LazyController-Android.apk" class="btn">⬇️ Download Android APK</a>
-        <a href="https://github.com/majdAlmotaem/mouseApp/releases/download/v1.0.0/LazyController-Server.exe" class="btn btn-red">⬇️ Download Windows Server</a>
+    <div class="downloads-section">
+        <div class="download-card">
+            <a href="https://github.com/majdAlmotaem/mouseApp/releases/download/v1.0.0/LazyController-Android.apk" class="btn">⬇️ Download APK</a>
+            <img src="androidApp.jpg" alt="Android App Preview" class="preview-img" onclick="openModal(this.src, '#00F0FF')">
+        </div>
+
+        <div class="download-card">
+            <a href="https://github.com/majdAlmotaem/mouseApp/releases/download/v1.0.0/LazyController-Server.exe" class="btn btn-red">⬇️ Download Server</a>
+            <img src="desktopApp.png" alt="Windows Desktop Preview" class="preview-img img-red" onclick="openModal(this.src, '#FF2A55')">
+        </div>
     </div>
 
     <div class="instructions">
@@ -86,6 +176,31 @@
             <li>Enter the IP address into the app and connect!</li>
         </ol>
     </div>
+
+    <div id="imageModal" class="modal" onclick="closeModal()">
+        <img class="modal-content" id="fullImage">
+        <div class="close-text">Click anywhere to close</div>
+    </div>
+
+    <script>
+        function openModal(imageSource, borderColor) {
+            const modal = document.getElementById("imageModal");
+            const fullImage = document.getElementById("fullImage");
+            
+            // Set the source of the big image to the one that was clicked
+            fullImage.src = imageSource;
+            // Match the border color to the specific app (Cyan or Red)
+            fullImage.style.borderColor = borderColor;
+            
+            // Show the modal
+            modal.style.display = "flex";
+        }
+
+        function closeModal() {
+            // Hide the modal
+            document.getElementById("imageModal").style.display = "none";
+        }
+    </script>
 
 </body>
 </html>
